@@ -1,9 +1,7 @@
 <?php
 namespace app\router;
 
-require_once __DIR__."/../util/harku_router/SubRouter.php";
-
-use \app\util\harku_router\SubRouter as SubRouter;
+use harku_router\SubRouter as SubRouter;
 
 class ARouter extends SubRouter
 {

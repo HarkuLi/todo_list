@@ -1,5 +1,5 @@
 <?php
-namespace app\util\harku_router;
+namespace harku_router;
 
 /**
  * store callback functions for methods of a path
