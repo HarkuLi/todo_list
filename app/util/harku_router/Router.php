@@ -49,13 +49,23 @@ class Router
 
     public function listen(): void
     {
-        if (!isset($this->pathMap[$_SERVER["REQUEST_URI"]])) {
+        //remove the query string
+        $path = $_SERVER["REQUEST_URI"];
+        $questionMarkPos = strpos($path, "?");
+        if ($questionMarkPos) {
+            $path = substr($path, 0, $questionMarkPos);
+        }
+
+        //remove the most right '/' chars
+        $path = rtrim($path, "/");
+
+        if (!isset($this->pathMap[$path])) {
             call_user_func($this->defaultCallback);
             return;
         }
 
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
-            $callback = $this->pathMap[$_SERVER["REQUEST_URI"]]->getGetCallback();
+            $callback = $this->pathMap[$path]->getGetCallback();
             if ($callback === null) {
                 call_user_func($this->defaultCallback);
                 return;
@@ -66,7 +76,7 @@ class Router
         }
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $callback = $this->pathMap[$_SERVER["REQUEST_URI"]]->getPostCallback();
+            $callback = $this->pathMap[$path]->getPostCallback();
             if ($callback === null) {
                 call_user_func($this->defaultCallback);
                 return;
