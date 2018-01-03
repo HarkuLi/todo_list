@@ -1,5 +1,5 @@
 <?php
-namespace app\config;
+namespace Harku\TodoList\Config;
 
 class DataConfig
 {

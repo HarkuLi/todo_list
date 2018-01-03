@@ -5,7 +5,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="main.css" />
     <script src="main.js"></script> -->
     <?php
-        include __DIR__."/../partial/head.html";
+        include __DIR__."/../Partial/head.html";
     ?>
 </head>
 <body>

@@ -1,9 +1,10 @@
 <?php
-namespace app\dao;
+namespace Harku\TodoList\Dao;
 
-use app\dao\Connection as Connection;
-use app\config\DataConfig as DataConfig;
 use \PDO;
+
+use Harku\TodoList\Dao\Connection as Connection;
+use Harku\TodoList\Config\DataConfig as DataConfig;
 
 class TaskDao
 {

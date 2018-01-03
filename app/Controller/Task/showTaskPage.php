@@ -1,6 +1,6 @@
 <?php
 
-use app\service\TaskService as TaskService;
+use Harku\TodoList\Service\TaskService as TaskService;
 
 $page = $_GET["page"];
 if (!$page) {
@@ -9,4 +9,4 @@ if (!$page) {
 
 $taskService = new TaskService();
 $taskList = $taskService->getPage($page);
-include __DIR__."/../../view/page/task.php";
+include __DIR__."/../../View/Page/task.php";

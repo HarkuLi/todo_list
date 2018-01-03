@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__."/../app/autoload.php";
+require_once __DIR__."/../vendor/autoload.php";
 
-use app\util\harku_router\Router as Router;
-use app\router\TaskRouter as TaskRouter;
+use Harku\TodoList\Util\SimpleRouter\Router as Router;
+use Harku\TodoList\Router\TaskRouter as TaskRouter;
 
 $rootRouter = new Router();
 

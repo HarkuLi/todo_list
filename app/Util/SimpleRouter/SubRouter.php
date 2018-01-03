@@ -1,7 +1,7 @@
 <?php
-namespace app\util\harku_router;
+namespace Harku\TodoList\Util\SimpleRouter;
 
-use app\util\harku_router\Router as Router;
+use Harku\TodoList\Util\SimpleRouter\Router as Router;
 
 abstract class SubRouter extends Router
 {

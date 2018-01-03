@@ -1,5 +1,5 @@
 <?php
-namespace app\util\harku_router;
+namespace Harku\TodoList\Util\SimpleRouter;
 
 /**
  * store callback functions for methods of a path

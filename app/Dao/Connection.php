@@ -1,9 +1,9 @@
 <?php
-namespace app\dao;
+namespace Harku\TodoList\Dao;
 
 use \PDO;
 
-use app\config\DBConfig as DBConfig;
+use Harku\TodoList\Config\DBConfig as DBConfig;
 
 class Connection
 {

@@ -1,15 +1,14 @@
 <?php
-namespace app\router;
+namespace Harku\TodoList\Router;
 
-use app\util\harku_router\SubRouter as SubRouter;
+use Harku\TodoList\Util\SimpleRouter\SubRouter as SubRouter;
 
 class TaskRouter extends SubRouter
 {
     public function setUpRouter(): void
     {
         $this->get("/", function () {
-            require __DIR__."/../controller/task/showTaskPage.php";
-            //include __DIR__."/../view/page/home.html";
+            require __DIR__."/../Controller/Task/showTaskPage.php";
         });
 
         $this->get("/test", function () {

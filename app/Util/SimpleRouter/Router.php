@@ -1,14 +1,14 @@
 <?php
-namespace app\util\harku_router;
+namespace Harku\TodoList\Util\SimpleRouter;
 
-use app\util\harku_router\MethodCallback as MethodCallback;
+use Harku\TodoList\Util\SimpleRouter\MethodCallback as MethodCallback;
 
 class Router
 {
     public function __construct()
     {
         $this->defaultCallback = function () {
-            include __DIR__."/default_page/404.html";
+            include __DIR__."/DefaultPage/404.html";
         };
     }
 

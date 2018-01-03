@@ -1,7 +1,7 @@
 <?php
-namespace app\service;
+namespace Harku\TodoList\service;
 
-use app\dao\TaskDao as TaskDao;
+use Harku\TodoList\Dao\TaskDao as TaskDao;
 
 class TaskService
 {
