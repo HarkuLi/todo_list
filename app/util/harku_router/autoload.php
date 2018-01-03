@@ -1,5 +1,5 @@
 <?php
-namespace harku_router;
+namespace app\util\harku_router;
 
 spl_autoload_register(function (string $className) {
     $className = ltrim($className, __NAMESPACE__);

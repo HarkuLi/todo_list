@@ -7,10 +7,13 @@ use app\config\DBConfig as DBConfig;
 
 class Connection
 {
+    /**
+     * @throws PDOException
+     */
     public static function getConnection(): PDO
     {
         $conn = new PDO(
-            "mysql:host=" . DBConfig::SERVER_NAME . ";dbname=" . DBConfig::DB_NAME,
+            static::DSN,
             DBConfig::USERNAME,
             DBConfig::PASSWORD
         );
@@ -18,4 +21,6 @@ class Connection
 
         return $conn;
     }
+
+    private const DSN = "mysql:host=" . DBConfig::SERVER_NAME . ";dbname=" . DBConfig::DB_NAME;
 }

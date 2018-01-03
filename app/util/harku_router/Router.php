@@ -1,7 +1,7 @@
 <?php
-namespace harku_router;
+namespace app\util\harku_router;
 
-use harku_router\MethodCallback as MethodCallback;
+use app\util\harku_router\MethodCallback as MethodCallback;
 
 class Router
 {
