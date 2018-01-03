@@ -4,7 +4,7 @@ namespace Harku\TodoList\Dao;
 use \PDO;
 
 use Harku\TodoList\Dao\Connection as Connection;
-use Harku\TodoList\Config\DataConfig as DataConfig;
+use Harku\TodoList\Config\TaskConfig as TaskConfig;
 
 class TaskDao
 {
@@ -28,8 +28,8 @@ class TaskDao
         $stmt->bindParam(":skipNum", $skipNum, PDO::PARAM_INT);
         $stmt->bindParam(":selectNum", $selectNum, PDO::PARAM_INT);
 
-        $skipNum = DataConfig::TASK_PER_PAGE * ($page-1);
-        $selectNum = DataConfig::TASK_PER_PAGE;
+        $skipNum = TaskConfig::TASK_PER_PAGE * ($page-1);
+        $selectNum = TaskConfig::TASK_PER_PAGE;
         $stmt->execute();
 
         return $stmt->fetchAll();
