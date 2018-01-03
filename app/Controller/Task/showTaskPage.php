@@ -2,9 +2,9 @@
 
 use Harku\TodoList\Service\TaskService as TaskService;
 
-$page = $_GET["page"];
-if (!$page) {
-    $page = 1;
+$page = 1;
+if (isset($_GET["page"])) {
+    $page = $_GET["page"];
 }
 
 $taskService = new TaskService();
