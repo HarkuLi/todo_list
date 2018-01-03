@@ -14,6 +14,7 @@ class Router
 
     public function use(string $path, Router $subRouter): void
     {
+        $path = rtrim($path, "/");
         foreach ($subRouter->getPathMap() as $subPath => $methodCallback) {
             $this->pathMap[$path.$subPath] = $methodCallback;
         }
@@ -21,6 +22,7 @@ class Router
 
     public function get(string $path, callable $callbackFunc): void
     {
+        $path = rtrim($path, "/");
         if (!isset($this->pathMap[$path])) {
             $this->pathMap[$path] = new MethodCallback();
         }
@@ -30,6 +32,7 @@ class Router
 
     public function post(string $path, callable $callbackFunc): void
     {
+        $path = rtrim($path, "/");
         if (!isset($this->pathMap[$path])) {
             $this->pathMap[$path] = new MethodCallback();
         }
