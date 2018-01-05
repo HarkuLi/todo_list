@@ -18,11 +18,18 @@ class TaskDao
         ;
     }
 
+    public function getRowNum(): int
+    {
+        $sql = "select count(id) from ".$this->tableName;
+        $result = $this->connection->query($sql)->fetch();
+        return $result["count(id)"];
+    }
+
     public function read(int $page): iterable
     {
         $sql = "select * from ".
             $this->tableName.
-            " limit 0, 10";
+            " limit :skipNum, :selectNum";
         
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(":skipNum", $skipNum, PDO::PARAM_INT);

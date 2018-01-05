@@ -12,4 +12,6 @@ class TaskConfig
         self::TASK_NOT_FINISH => "not finished",
         self::TASK_FINISH => "finished"
     );
+
+    const PAGINATION_NUM = 9;
 }
