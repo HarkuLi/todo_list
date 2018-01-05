@@ -12,7 +12,7 @@ class TaskRouter extends SubRouter
         });
 
         $this->get("/test", function () {
-            echo "test";
+            require __DIR__."/../Controller/Task/test.php";
         });
     }
 }
