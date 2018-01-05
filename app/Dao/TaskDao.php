@@ -29,6 +29,7 @@ class TaskDao
     {
         $sql = "select * from ".
             $this->tableName.
+            " order by start_date desc".
             " limit :skipNum, :selectNum";
         
         $stmt = $this->connection->prepare($sql);
