@@ -15,9 +15,9 @@ use Harku\TodoList\Config\TaskConfig;
 
         <!-- function row -->
         <div class="clearfix">
-            <button type="button" class="btn btn-info btn-sm pull-right">
+            <a href="/task/new" class="btn btn-info btn-sm pull-right">
                 <span class="glyphicon glyphicon-plus"></span>
-            </button>
+            </a>
         </div>
 
         <!-- Pagination -->
