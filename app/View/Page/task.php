@@ -13,22 +13,47 @@ use Harku\TodoList\Config\TaskConfig;
 <body>
     <div class="container">
 
+        <!-- function row -->
+        <div class="clearfix">
+            <button type="button" class="btn btn-info btn-sm pull-right">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+
         <!-- Pagination -->
         <div class="text-center">
             <?php include __DIR__."/../Partial/pagination.php"; ?>
         </div>
 
-        <?php foreach ($taskList as $task) { ?>
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <?= $task["title"] ?>
-                </div>
-                <div class="panel-body">
-                    Start date: <?= $task["start_date"] ?><br>
-                    Status: <?= TaskConfig::TASK_STATUS_TEXT[$task["status"]] ?>
-                </div>
+        <!-- task list -->
+        <?php
+        foreach ($taskList as $task) {
+            if ($task["status"] === TaskConfig::TASK_FINISH) {
+                echo "<div class=\"panel panel-success\">";
+            } else {
+                echo "<div class=\"panel panel-info\">";
+            }
+        ?>
+            <div class="panel-heading clearfix">
+                <span class="id hidden"><?= $task["id"] ?></span>
+                <span class="pull-left"><?= $task["title"] ?></span>
+                <span class="pull-right"><?= $task["start_date"] ?></span>
             </div>
-        <?php } ?>
+            <div class="panel-body">
+                <button type="button" class="btn btn-info btn-sm">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button type="button" class="btn btn-info btn-sm">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm pull-right">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </div>
+        <?php
+            echo "</div>";
+        }
+        ?>
     </div>
 </body>
 </html>
