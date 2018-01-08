@@ -50,5 +50,10 @@ class TaskService
         return $this->taskDao->read($page);
     }
 
+    public function delete(string $id): void
+    {
+        $this->taskDao->delete($id);
+    }
+
     private $taskDao;
 }

@@ -65,6 +65,17 @@ class TaskDao
         return $stmt->fetchAll();
     }
 
+    public function delete(string $id): void
+    {
+        $sql = "delete from ".
+            $this->tableName.
+            " where id = :id";
+        
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+    }
+
     private $connection;
     private $tableName = "task";
 }

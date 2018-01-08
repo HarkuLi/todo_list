@@ -6,8 +6,7 @@ use Harku\TodoList\Config\TaskConfig;
 <html>
 <head>
     <title>task list</title>
-    <!-- <link rel="stylesheet" type="text/css" href="main.css" />
-    <script src="main.js"></script> -->
+    <!-- <link rel="stylesheet" type="text/css" href="main.css" /> -->
     <?php include __DIR__."/../Partial/head.html"; ?>
 </head>
 <body>
@@ -46,7 +45,7 @@ use Harku\TodoList\Config\TaskConfig;
                 <button type="button" class="btn btn-info btn-sm">
                     <span class="glyphicon glyphicon-ok"></span>
                 </button>
-                <button type="button" class="btn btn-danger btn-sm pull-right">
+                <button type="button" class="btn btn-danger btn-sm pull-right task_remove">
                     <span class="glyphicon glyphicon-trash"></span>
                 </button>
             </div>
@@ -55,5 +54,7 @@ use Harku\TodoList\Config\TaskConfig;
         }
         ?>
     </div>
+
+    <script src="/js/task.js"></script>
 </body>
 </html>
