@@ -14,4 +14,12 @@ abstract class SubRouter extends Router
      * set every paths you want in this function
      */
     abstract public function setUpRouter(): void;
+
+    public function staticResource(string $pathPat, string $matchPath): void
+    {
+        /**
+         * This method is inherited from Router class.
+         * To remove this method logically, it should be empty.
+         */
+    }
 }

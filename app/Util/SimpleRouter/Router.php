@@ -40,6 +40,27 @@ class Router
         $this->pathMap[$path]->setPostCallback($callbackFunc);
     }
 
+    public function staticResource(string $pathPat, string $matchPath): void
+    {
+        if (!isset($this->staticMap[$pathPat])) {
+            $this->staticMap[$pathPat] = new MethodCallback();
+        }
+        
+        $this->staticMap[$pathPat]->setGetCallback(function () use ($matchPath) {
+            $uri = $_SERVER["REQUEST_URI"];
+            $uri = rtrim($uri, "/");
+
+            $lastSlashPos = strrpos($uri, "/");
+            if (!$lastSlashPos) {
+                return;
+            }
+            $fileName = substr($uri, $lastSlashPos + 1);
+            $actualPath = $matchPath.$fileName;
+
+            readfile($actualPath);
+        });
+    }
+
     public function getPathMap(): iterable
     {
         return $this->pathMap;
@@ -61,6 +82,14 @@ class Router
 
         //remove the most right '/' chars
         $path = rtrim($path, "/");
+
+        //static resource
+        foreach ($this->staticMap as $pathPat => $methodCallback) {
+            if (preg_match($pathPat, $path)) {
+                call_user_func($methodCallback->getGetCallback());
+                return;
+            }
+        }
 
         if (!isset($this->pathMap[$path])) {
             call_user_func($this->defaultCallback);
@@ -91,7 +120,12 @@ class Router
     }
 
     /**
-     * path(string) => MehodCallback
+     * path{regex string} => MehodCallback
+     */
+    private $staticMap = array();
+
+    /**
+     * path{string} => MehodCallback
      */
     private $pathMap = array();
 
