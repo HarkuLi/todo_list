@@ -1,7 +1,8 @@
 <?php
 namespace Harku\TodoList\Util\SimpleRouter;
 
-use Harku\TodoList\Util\SimpleRouter\MethodCallback as MethodCallback;
+use Harku\TodoList\Util\SimpleRouter\MimeUtil;
+use Harku\TodoList\Util\SimpleRouter\MethodCallback;
 
 class Router
 {
@@ -56,7 +57,8 @@ class Router
             }
             $fileName = substr($uri, $lastSlashPos + 1);
             $actualPath = $matchPath.$fileName;
-
+            
+            header("Content-Type: ".MimeUtil::determineType($actualPath));
             readfile($actualPath);
         });
     }
