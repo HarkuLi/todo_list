@@ -39,7 +39,7 @@ use Harku\TodoList\Config\TaskConfig;
                 <span class="pull-right"><?= $task["start_date"] ?></span>
             </div>
             <div class="panel-body">
-                <button type="button" class="btn btn-info btn-sm">
+                <button type="button" class="btn btn-info btn-sm task_edit">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
                 <button type="button" class="btn btn-info btn-sm">

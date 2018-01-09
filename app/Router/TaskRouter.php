@@ -19,6 +19,14 @@ class TaskRouter extends SubRouter
             require __DIR__."/../Controller/Task/taskCreate.php";
         });
 
+        $this->post("/edit", function () {
+            require __DIR__."/../Controller/Task/taskEdit.php";
+        });
+
+        $this->post("/update_content", function () {
+            require __DIR__."/../Controller/Task/taskUpdateContent.php";
+        });
+
         $this->get("/test", function () {
             require __DIR__."/../Controller/Task/test.php";
         });

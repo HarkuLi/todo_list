@@ -2,6 +2,15 @@ var processing = false;
 
 $(() => {
 
+$(".task_edit").on("click", function() {
+  if(processing) return;
+
+  processing = true;
+  var self = this;
+  editTask(self);
+  processing = false;
+});
+
 $(".task_remove").on("click", function() {
   if(processing) return;
 
@@ -21,6 +30,16 @@ $(".task_remove").on("click", function() {
 ///////////////
 // functions //
 ///////////////
+
+function editTask(self) {
+  var panel = $(self).parent().parent();
+  var id = $(panel).find(".id").text();
+
+  var form = $('<form method="post" action="/task/edit"></form>');
+  $(form).append(`<input name="id" value="${id}">`);
+  $("body").append(form);
+  $(form).submit();
+}
 
 function delTask(self) {
   var panel = $(self).parent().parent();

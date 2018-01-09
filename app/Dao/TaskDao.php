@@ -22,7 +22,7 @@ class TaskDao
      */
     public function create(Task $task): void
     {
-        $sql = "insert into task (id, title, start_date, status)
+        $sql = "insert into $this->tableName (id, title, start_date, status)
             values (:id, :title, :start_date, :status)";
         
         $stmt = $this->connection->prepare($sql);
@@ -38,9 +38,30 @@ class TaskDao
      */
     public function getRowNum(): int
     {
-        $sql = "select count(id) from ".$this->tableName;
-        $result = $this->connection->query($sql)->fetch();
-        return $result["count(id)"];
+        $sql = "select count(id) from $this->tableName";
+        $rst = $this->connection->query($sql)->fetch();
+        return $rst["count(id)"];
+    }
+
+    /**
+     * @param string $id
+     * @return Task|null
+     */
+    public function readOne(string $id): ?Task
+    {
+        $sql = "select * from $this->tableName
+            where id = :id";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+
+        $rst = $stmt->fetch();
+        if (!$rst) {
+            return null;
+        }
+        
+        return new Task($rst);
     }
 
     /**
@@ -49,10 +70,9 @@ class TaskDao
      */
     public function read(int $page): iterable
     {
-        $sql = "select * from ".
-            $this->tableName.
-            " order by start_date desc".
-            " limit :skipNum, :selectNum";
+        $sql = "select * from $this->tableName
+            order by start_date desc
+            limit :skipNum, :selectNum";
         
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(":skipNum", $skipNum, PDO::PARAM_INT);
@@ -65,15 +85,85 @@ class TaskDao
         return $stmt->fetchAll();
     }
 
+    public function update(Task $task): void
+    {
+        $handledData = $this->dataHandler($task);
+        $setStr = $handledData["setStr"];
+        $paramList = $handledData["paramList"];
+
+        $sql = "update $this->tableName
+            set $setStr
+            where id = :id";
+
+        $stmt = $this->connection->prepare($sql);
+        for ($i=0; $i<count($paramList); ++$i) {
+            $stmt->bindValue(":$i", $paramList[$i]["value"], $paramList[$i]["type"]);
+        }
+        $stmt->bindValue(":id", $task->getId());
+        $stmt->execute();
+    }
+
     public function delete(string $id): void
     {
-        $sql = "delete from ".
-            $this->tableName.
-            " where id = :id";
+        $sql = "delete from $this->tableName
+            where id = :id";
         
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(":id", $id);
         $stmt->execute();
+    }
+
+    /**
+     * handle task object and generate informations for db query
+     *
+     * @param Task $task
+     * @return iterable
+     * [
+     *      "setStr" => string,
+     *      "paramList" => array([
+     *          "value" => mixed,
+     *          "type" => PDO::PARAM_*
+     *      ])
+     * ]
+     */
+    public function dataHandler(Task $task): iterable
+    {
+        $rst = [];
+        $rst["setStr"] = "";
+        $rst["paramList"] = [];
+
+        $title = $task->getTitle();
+        $startDate = $task->getStartDate();
+        $endDate = $task->getEndDate();
+        $status = $task->getStatus();
+
+        if ($title !== null) {
+            $rst["setStr"] .= "title = :".count($rst["paramList"]);
+            $rst["paramList"][] = ["value" => $title, "type" => PDO::PARAM_STR];
+        }
+        if ($startDate !== null) {
+            if (strlen($rst["setStr"])) {
+                $rst["setStr"] .= ", ";
+            }
+            $rst["setStr"] .= "start_date = :".count($rst["paramList"]);
+            $rst["paramList"][] = ["value" => $startDate, "type" => PDO::PARAM_STR];
+        }
+        if ($endDate !== null) {
+            if (strlen($rst["setStr"])) {
+                $rst["setStr"] .= ", ";
+            }
+            $rst["setStr"] .= "end_date = :".count($rst["paramList"]);
+            $rst["paramList"][] = ["value" => $endDate, "type" => PDO::PARAM_STR];
+        }
+        if ($status !== null) {
+            if (strlen($rst["setStr"])) {
+                $rst["setStr"] .= ", ";
+            }
+            $rst["setStr"] .= "status = :".count($rst["paramList"]);
+            $rst["paramList"][] = ["value" => $status, "type" => PDO::PARAM_INT];
+        }
+
+        return $rst;
     }
 
     private $connection;

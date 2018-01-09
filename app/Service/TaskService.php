@@ -42,12 +42,29 @@ class TaskService
     }
 
     /**
+     * @param string $id
+     * @return Task|null
+     */
+    public function getTask(string $id): ?Task
+    {
+        return $this->taskDao->readOne($id);
+    }
+
+    /**
      * @param integer $page
      * @return iterable an array including tasks of the page
      */
     public function getPage(int $page): iterable
     {
         return $this->taskDao->read($page);
+    }
+
+    public function updateContent(string $id, string $title): void
+    {
+        $task = new Task();
+        $task->setId($id);
+        $task->setTitle($title);
+        $this->taskDao->update($task);
     }
 
     public function delete(string $id): void

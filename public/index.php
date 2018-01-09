@@ -10,5 +10,6 @@ $taskRouter = new TaskRouter();
 $rootRouter->use("/task", $taskRouter);
 
 $rootRouter->staticResource("/\/js\/.*/", __DIR__."/js/");
+$rootRouter->staticResource("/\/css\/.*/", __DIR__."/css/");
 
 $rootRouter->listen();
