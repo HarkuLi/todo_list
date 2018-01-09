@@ -3,7 +3,25 @@ namespace Harku\TodoList\Model;
 
 class Task
 {
-    public function getId(): string
+    /**
+     * used for converting the array returned by PDO to a Task object
+     *
+     * @param iterable $assocTask an associative array of task
+     */
+    public function __construct(iterable $assocTask = null)
+    {
+        if ($assocTask === null) {
+            return;
+        }
+
+        $this->id = $assocTask["id"];
+        $this->title = $assocTask["title"];
+        $this->startDate = $assocTask["start_date"];
+        $this->endDate = $assocTask["end_date"];
+        $this->status = $assocTask["status"];
+    }
+
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -13,7 +31,7 @@ class Task
         $this->id = $id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -23,7 +41,7 @@ class Task
         $this->title = $title;
     }
 
-    public function getStartDate(): string
+    public function getStartDate(): ?string
     {
         return $this->startDate;
     }
@@ -33,7 +51,7 @@ class Task
         $this->startDate = $startDate;
     }
 
-    public function getEndDate(): string
+    public function getEndDate(): ?string
     {
         return $this->endDate;
     }
@@ -43,7 +61,7 @@ class Task
         $this->endDate = $endDate;
     }
 
-    public function getStatus(): int
+    public function getStatus(): ?int
     {
         return $this->status;
     }
