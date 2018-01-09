@@ -3,6 +3,8 @@
 use Harku\TodoList\Service\TaskService as TaskService;
 use Harku\TodoList\Config\TaskConfig as TaskConfig;
 
+session_start();
+
 $taskService = new TaskService();
 $pageNum = $taskService->getPageNum();
 
@@ -19,6 +21,7 @@ if ($page < 1 || ($page > $pageNum && $page !== 1)) {
     include __DIR__."/../../View/Page/404.html";
     die();
 }
+$_SESSION[TaskConfig::SESSION_SRC_PAGE] = $page;
 
 ///////////////////
 // generate page //
