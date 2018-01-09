@@ -27,16 +27,16 @@ use Harku\TodoList\Config\TaskConfig;
         <!-- task list -->
         <?php
         foreach ($taskList as $task) {
-            if ($task["status"] === TaskConfig::TASK_FINISH) {
+            if ($task->getStatus() === TaskConfig::TASK_FINISH) {
                 echo "<div class=\"panel panel-success\">";
             } else {
                 echo "<div class=\"panel panel-info\">";
             }
         ?>
             <div class="panel-heading clearfix">
-                <span class="id hidden"><?= $task["id"] ?></span>
-                <span class="pull-left"><?= $task["title"] ?></span>
-                <span class="pull-right"><?= $task["start_date"] ?></span>
+                <span class="id hidden"><?= $task->getId() ?></span>
+                <span class="pull-left"><?= $task->getTitle() ?></span>
+                <span class="pull-right"><?= $task->getStartDate() ?></span>
             </div>
             <div class="panel-body">
                 <button type="button" class="btn btn-info btn-sm task_edit">

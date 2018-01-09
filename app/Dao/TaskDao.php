@@ -66,9 +66,9 @@ class TaskDao
 
     /**
      * @param integer $page
-     * @return iterable an array including tasks of the page
+     * @return iterable Task[]
      */
-    public function read(int $page): iterable
+    public function readPage(int $page): iterable
     {
         $sql = "select * from $this->tableName
             order by start_date desc
@@ -82,7 +82,13 @@ class TaskDao
         $selectNum = TaskConfig::TASK_PER_PAGE;
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        $assocTaskList = $stmt->fetchAll();
+        $taskList = [];
+        foreach ($assocTaskList as $assocTask) {
+            $taskList[] = new Task($assocTask);
+        }
+        
+        return $taskList;
     }
 
     public function update(Task $task): void

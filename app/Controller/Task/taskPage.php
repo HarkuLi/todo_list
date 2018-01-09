@@ -28,6 +28,8 @@ $_SESSION[TaskConfig::SESSION_SRC_PAGE] = $page;
 ///////////////////
 
 $taskList = $taskService->getPage($page);
+$paginationStart = 1;
+$paginationEnd = 1;
 
 if ($page <= round(TaskConfig::PAGINATION_NUM / 2)) {
     $paginationStart = 1;

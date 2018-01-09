@@ -52,11 +52,11 @@ class TaskService
 
     /**
      * @param integer $page
-     * @return iterable an array including tasks of the page
+     * @return iterable Task[]
      */
     public function getPage(int $page): iterable
     {
-        return $this->taskDao->read($page);
+        return $this->taskDao->readPage($page);
     }
 
     public function updateContent(string $id, string $title): void
