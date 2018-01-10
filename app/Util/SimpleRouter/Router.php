@@ -9,6 +9,7 @@ class Router
     public function __construct()
     {
         $this->defaultCallback = function () {
+            http_response_code(404);
             include __DIR__."/DefaultPage/404.html";
         };
     }
