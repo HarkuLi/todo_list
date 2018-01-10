@@ -32,6 +32,9 @@ class TaskRouter extends SubRouter
         });
 
         //Restful API
+        $this->post("/finish", function () {
+            require __DIR__."/../Controller/Task/taskFinish.php";
+        });
 
         $this->post("/del", function () {
             require __DIR__."/../Controller/Task/taskDelete.php";

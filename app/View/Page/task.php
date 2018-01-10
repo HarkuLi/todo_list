@@ -36,16 +36,29 @@ use Harku\TodoList\Config\TaskConfig;
             <div class="panel-heading clearfix">
                 <span class="id hidden"><?= $task->getId() ?></span>
                 <span class="pull-left"><?= $task->getTitle() ?></span>
-                <span class="pull-right"><?= $task->getStartDate() ?></span>
+                <span class="pull-right">
+                    <?php
+                    echo $task->getStartDate();
+                    if ($task->getStatus() === TaskConfig::TASK_FINISH) {
+                        echo " ~ ".$task->getEndDate();
+                    }
+                    ?>
+                </span>
             </div>
             <div class="panel-body">
-                <button type="button" class="btn btn-info btn-sm task_edit">
+                <button type="button" class="btn btn-info btn-sm task_edit" title="edit">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button type="button" class="btn btn-info btn-sm">
-                    <span class="glyphicon glyphicon-ok"></span>
-                </button>
-                <button type="button" class="btn btn-danger btn-sm pull-right task_remove">
+                <?php if ($task->getStatus() === TaskConfig::TASK_NOT_FINISH) { ?>
+                    <button type="button" class="btn btn-info btn-sm task_finish" title="finish">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+                <?php } else { ?>
+                    <button type="button" class="btn btn-info btn-sm task_unfinish" title="unfinish">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                <?php } ?>
+                <button type="button" class="btn btn-danger btn-sm pull-right task_remove" title="delete">
                     <span class="glyphicon glyphicon-trash"></span>
                 </button>
             </div>

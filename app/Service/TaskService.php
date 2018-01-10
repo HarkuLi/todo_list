@@ -67,6 +67,15 @@ class TaskService
         $this->taskDao->update($task);
     }
 
+    public function changeStatus(string $id, int $status, string $endDate = null): void
+    {
+        $task = new Task();
+        $task->setId($id);
+        $task->setStatus($status);
+        $task->setEndDate($endDate);
+        $this->taskDao->update($task);
+    }
+
     public function delete(string $id): void
     {
         $this->taskDao->delete($id);

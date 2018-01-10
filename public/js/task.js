@@ -11,6 +11,17 @@ $(".task_edit").on("click", function() {
   processing = false;
 });
 
+$(".task_finish").on("click", function() {
+  if(processing) return;
+
+  processing = true;
+  var self = this;
+  finishTask(self)
+    .then(() => {
+      processing = false;
+    });
+});
+
 $(".task_remove").on("click", function() {
   if(processing) return;
 
@@ -41,6 +52,20 @@ function editTask(self) {
   $(form).submit();
 }
 
+function finishTask(self) {
+  var panel = $(self).parent().parent();
+  var id = $(panel).find(".id").text();
+  var data = {id};
+
+  return ajaxFinishTask(data)
+    .then(() => {
+      location.reload();
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
 function delTask(self) {
   var panel = $(self).parent().parent();
   var id = $(panel).find(".id").text();
@@ -58,6 +83,22 @@ function delTask(self) {
 //////////
 // ajax //
 //////////
+
+function ajaxFinishTask(data) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "/task/finish",
+      type: "POST",
+      data,
+      success: (data, status, xhr) => {
+        resolve(data);
+      },
+      error: (res) => {
+        reject(res.responseJSON);
+      }
+    });
+  });
+}
 
 function ajaxDelTask(data) {
   return new Promise((resolve, reject) => {
