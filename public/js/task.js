@@ -22,6 +22,17 @@ $(".task_finish").on("click", function() {
     });
 });
 
+$(".task_unfinish").on("click", function() {
+  if(processing) return;
+
+  processing = true;
+  var self = this;
+  unfinishTask(self)
+    .then(() => {
+      processing = false;
+    });
+});
+
 $(".task_remove").on("click", function() {
   if(processing) return;
 
@@ -66,6 +77,20 @@ function finishTask(self) {
     });
 }
 
+function unfinishTask(self) {
+  var panel = $(self).parent().parent();
+  var id = $(panel).find(".id").text();
+  var data = {id};
+
+  return ajaxUnfinishTask(data)
+    .then(() => {
+      location.reload();
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
 function delTask(self) {
   var panel = $(self).parent().parent();
   var id = $(panel).find(".id").text();
@@ -88,6 +113,22 @@ function ajaxFinishTask(data) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: "/task/finish",
+      type: "POST",
+      data,
+      success: (data, status, xhr) => {
+        resolve(data);
+      },
+      error: (res) => {
+        reject(res.responseJSON);
+      }
+    });
+  });
+}
+
+function ajaxUnfinishTask(data) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "/task/unfinish",
       type: "POST",
       data,
       success: (data, status, xhr) => {
