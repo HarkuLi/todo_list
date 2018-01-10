@@ -164,11 +164,16 @@ class TaskDao
         $rst["whereStr"] = "";
         $rst["paramList"] = [];
 
+        $title = $filter->getTitle();
         $status = $filter->getStatus();
 
+        if ($title !== null && strlen($title)) {
+            $rst["whereStr"] .= "title like :".count($rst["paramList"]);
+            $rst["paramList"][] = ["value" => "%$title%", "type" => PDO::PARAM_STR];
+        }
         if ($status !== null) {
             if (strlen($rst["whereStr"])) {
-                $rst["whereStr"] .= ", ";
+                $rst["whereStr"] .= " and ";
             }
             $rst["whereStr"] .= "status = :".count($rst["paramList"]);
             $rst["paramList"][] = ["value" => $status, "type" => PDO::PARAM_INT];

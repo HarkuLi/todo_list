@@ -26,7 +26,7 @@ class Task
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
@@ -36,7 +36,7 @@ class Task
         return $this->title;
     }
 
-    public function setTitle(string $title): void
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -46,7 +46,7 @@ class Task
         return $this->startDate;
     }
 
-    public function setStartDate(string $startDate): void
+    public function setStartDate(?string $startDate): void
     {
         $this->startDate = $startDate;
     }
@@ -56,7 +56,7 @@ class Task
         return $this->endDate;
     }
 
-    public function setEndDate(string $endDate): void
+    public function setEndDate(?string $endDate): void
     {
         $this->endDate = $endDate;
     }
@@ -66,7 +66,7 @@ class Task
         return $this->status;
     }
 
-    public function setStatus(int $status): void
+    public function setStatus(?int $status): void
     {
         $this->status = $status;
     }

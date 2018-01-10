@@ -11,6 +11,11 @@ $taskService = new TaskService();
 // query parameters //
 //////////////////////
 
+$title = null;
+if (isset($_GET["title"])) {
+    $title = $_GET["title"];
+}
+
 $status = TaskConfig::TASK_NOT_FINISH;
 if (isset($_GET["status"])) {
     $status = (int)$_GET["status"];
@@ -22,6 +27,7 @@ if (!isset(TaskConfig::TASK_STATUS_TEXT[$status])) {
 }
 
 $filter = new Task();
+$filter->setTitle($title);
 $filter->setStatus($status);
 $pageNum = $taskService->getPageNum($filter);
 

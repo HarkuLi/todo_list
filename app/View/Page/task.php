@@ -13,10 +13,30 @@ use Harku\TodoList\Config\TaskConfig;
     <div class="container">
 
         <!-- tool bar -->
-        <div class="well">
-            <a href="/task/new" class="btn btn-info btn-sm" title="new">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
+        <div class="well row">
+            <!-- new button -->
+            <div class="col-sm-1">
+                <a href="/task/new" class="btn btn-info btn-sm" title="new">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+
+            <!-- search -->
+            <form method="get" action="/task" class="col-sm-offset-7 col-sm-4">
+                <input type="text" class="hidden" name="status" value="<?= $status ?>">
+                <div class="input-group">
+                    <input type="text"
+                        class="form-control"
+                        name="title"
+                        value="<?= $title ?>"
+                        placeholder="task keyword">
+                    <div class="input-group-btn">
+                        <button class="btn btn-info" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <!-- status tabs -->

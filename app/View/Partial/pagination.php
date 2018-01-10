@@ -1,6 +1,9 @@
 <ul class="pagination">
     <?php
     $filterStr = "status=$status";
+    if ($title !== null) {
+        $filterStr .= "&title=$title";
+    }
 
     // previous page button
     if ($page <= $paginationStart) {
