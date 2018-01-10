@@ -34,12 +34,27 @@ class TaskDao
     }
 
     /**
+     * @param Task $filter
      * @return integer total row number
      */
-    public function getRowNum(): int
+    public function getRowNum(Task $filter): int
     {
-        $sql = "select count(id) from $this->tableName";
-        $rst = $this->connection->query($sql)->fetch();
+        $handledFilter = $this->filterHandler($filter);
+        $whereStr = $handledFilter["whereStr"];
+        $paramList = $handledFilter["paramList"];
+
+        $sql = "select count(id) from $this->tableName ";
+        if (strlen($whereStr)) {
+            $sql .= "where $whereStr ";
+        }
+
+        $stmt = $this->connection->prepare($sql);
+        for ($i=0; $i<count($paramList); ++$i) {
+            $stmt->bindValue(":$i", $paramList[$i]["value"], $paramList[$i]["type"]);
+        }
+        $stmt->execute();
+        
+        $rst = $stmt->fetch();
         return $rst["count(id)"];
     }
 
@@ -66,20 +81,30 @@ class TaskDao
 
     /**
      * @param integer $page
+     * @param Task $filter
      * @return iterable Task[]
      */
-    public function readPage(int $page): iterable
+    public function readPage(int $page, Task $filter): iterable
     {
-        $sql = "select * from $this->tableName
-            order by start_date desc
+        $handledFilter = $this->filterHandler($filter);
+        $whereStr = $handledFilter["whereStr"];
+        $paramList = $handledFilter["paramList"];
+
+        $sql = "select * from $this->tableName ";
+        if (strlen($whereStr)) {
+            $sql .= "where $whereStr ";
+        }
+        $sql .= "order by start_date desc
             limit :skipNum, :selectNum";
         
         $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(":skipNum", $skipNum, PDO::PARAM_INT);
-        $stmt->bindParam(":selectNum", $selectNum, PDO::PARAM_INT);
-
+        for ($i=0; $i<count($paramList); ++$i) {
+            $stmt->bindValue(":$i", $paramList[$i]["value"], $paramList[$i]["type"]);
+        }
         $skipNum = TaskConfig::TASK_PER_PAGE * ($page-1);
+        $stmt->bindValue(":skipNum", $skipNum, PDO::PARAM_INT);
         $selectNum = TaskConfig::TASK_PER_PAGE;
+        $stmt->bindValue(":selectNum", $selectNum, PDO::PARAM_INT);
         $stmt->execute();
 
         $assocTaskList = $stmt->fetchAll();
@@ -120,7 +145,41 @@ class TaskDao
     }
 
     /**
-     * handle task object and generate informations for db query
+     * Handle task object and generate informations for db query.
+     * Rule of parameter names: :0, :1, :2, ......
+     *
+     * @param Task $filter
+     * @return iterable
+     * [
+     *      "whereStr" => string,
+     *      "paramList" => array([
+     *          "value" => mixed,
+     *          "type" => PDO::PARAM_*
+     *      ])
+     * ]
+     */
+    private function filterHandler(Task $filter): iterable
+    {
+        $rst = [];
+        $rst["whereStr"] = "";
+        $rst["paramList"] = [];
+
+        $status = $filter->getStatus();
+
+        if ($status !== null) {
+            if (strlen($rst["whereStr"])) {
+                $rst["whereStr"] .= ", ";
+            }
+            $rst["whereStr"] .= "status = :".count($rst["paramList"]);
+            $rst["paramList"][] = ["value" => $status, "type" => PDO::PARAM_INT];
+        }
+
+        return $rst;
+    }
+
+    /**
+     * Handle task object and generate informations for db query.
+     * Rule of parameter names: :0, :1, :2, ......
      *
      * @param Task $task
      * @return iterable
@@ -132,7 +191,7 @@ class TaskDao
      *      ])
      * ]
      */
-    public function dataHandler(Task $task): iterable
+    private function dataHandler(Task $task): iterable
     {
         $rst = [];
         $rst["setStr"] = "";

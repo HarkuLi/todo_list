@@ -12,12 +12,27 @@ use Harku\TodoList\Config\TaskConfig;
 <body>
     <div class="container">
 
-        <!-- function row -->
-        <div class="clearfix">
-            <a href="/task/new" class="btn btn-info btn-sm pull-right">
+        <!-- tool bar -->
+        <div class="well">
+            <a href="/task/new" class="btn btn-info btn-sm" title="new">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
+
+        <!-- status tabs -->
+        <ul class="nav nav-tabs">
+            <?php
+            foreach (TaskConfig::TASK_STATUS_TEXT as $idx => $text) {
+                if ($idx === $status) {
+                    echo "<li class=\"active\">";
+                } else {
+                    echo "<li>";
+                }
+                echo "<a href=\"/task?status=$idx\">$text</a>";
+                echo "</li>";
+            }
+            ?>
+        </ul>
 
         <!-- Pagination -->
         <div class="text-center">

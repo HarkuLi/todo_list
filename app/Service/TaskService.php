@@ -33,11 +33,12 @@ class TaskService
     }
 
     /**
+     * @param Task $filter
      * @return integer total page number
      */
-    public function getPageNum(): int
+    public function getPageNum(Task $filter): int
     {
-        $rowNum = $this->taskDao->getRowNum();
+        $rowNum = $this->taskDao->getRowNum($filter);
         return ceil($rowNum / TaskConfig::TASK_PER_PAGE);
     }
 
@@ -52,11 +53,12 @@ class TaskService
 
     /**
      * @param integer $page
+     * @param Task $filter
      * @return iterable Task[]
      */
-    public function getPage(int $page): iterable
+    public function getPage(int $page, Task $filter): iterable
     {
-        return $this->taskDao->readPage($page);
+        return $this->taskDao->readPage($page, $filter);
     }
 
     public function updateContent(string $id, string $title): void

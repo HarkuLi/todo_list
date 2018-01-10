@@ -1,5 +1,7 @@
 <ul class="pagination">
     <?php
+    $filterStr = "status=$status";
+
     // previous page button
     if ($page <= $paginationStart) {
         echo "<li class=\"disabled\">";
@@ -7,7 +9,7 @@
         echo "</li>";
     } else {
         echo "<li>";
-        echo "<a href=\"/task?page=".($page-1)."\">";
+        echo "<a href=\"/task?page=".($page-1)."&$filterStr\">";
         echo "<span class=\"glyphicon glyphicon-triangle-left\"></span>";
         echo "</a>";
         echo "</li>";
@@ -16,9 +18,9 @@
     // pagination buttons
     for ($i=$paginationStart; $i<=$paginationEnd; ++$i) {
         if ($i === $page) {
-            echo "<li class=\"active\"><a href=\"/task?page=$i\">$i</a></li>";
+            echo "<li class=\"active\"><a href=\"/task?page=$i&$filterStr\">$i</a></li>";
         } else {
-            echo "<li><a href=\"/task?page=$i\">$i</a></li>";
+            echo "<li><a href=\"/task?page=$i&$filterStr\">$i</a></li>";
         }
     }
 
@@ -29,7 +31,7 @@
         echo "</li>";
     } else {
         echo "<li>";
-        echo "<a href=\"/task?page=".($page+1)."\">";
+        echo "<a href=\"/task?page=".($page+1)."&$filterStr\">";
         echo "<span class=\"glyphicon glyphicon-triangle-right\"></span>";
         echo "</a>";
         echo "</li>";

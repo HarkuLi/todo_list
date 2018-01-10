@@ -1,16 +1,29 @@
 <?php
 
-use Harku\TodoList\Service\TaskService as TaskService;
-use Harku\TodoList\Config\TaskConfig as TaskConfig;
+use Harku\TodoList\Service\TaskService;
+use Harku\TodoList\Config\TaskConfig;
+use Harku\TodoList\Model\Task;
 
 session_start();
-
 $taskService = new TaskService();
-$pageNum = $taskService->getPageNum();
 
 //////////////////////
 // query parameters //
 //////////////////////
+
+$status = TaskConfig::TASK_NOT_FINISH;
+if (isset($_GET["status"])) {
+    $status = (int)$_GET["status"];
+}
+if (!isset(TaskConfig::TASK_STATUS_TEXT[$status])) {
+    http_response_code(400);
+    include __DIR__."/../../View/Page/400.html";
+    die();
+}
+
+$filter = new Task();
+$filter->setStatus($status);
+$pageNum = $taskService->getPageNum($filter);
 
 $page = 1;
 if (isset($_GET["page"])) {
@@ -27,7 +40,7 @@ $_SESSION[TaskConfig::SESSION_SRC_PAGE] = $page;
 // generate page //
 ///////////////////
 
-$taskList = $taskService->getPage($page);
+$taskList = $taskService->getPage($page, $filter);
 $paginationStart = 1;
 $paginationEnd = 1;
 
