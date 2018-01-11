@@ -35,7 +35,7 @@ use Harku\TodoList\Config\TaskConfig;
                         value="<?= $title ?>"
                         placeholder="task keyword">
                     <div class="input-group-btn">
-                        <button class="btn btn-info" type="submit">
+                        <button class="btn btn-info" type="submit" title="search">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </div>
