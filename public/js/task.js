@@ -57,7 +57,7 @@ function editTask(self) {
   var panel = $(self).parent().parent();
   var id = $(panel).find(".id").text();
 
-  var form = $('<form method="post" action="/task/edit"></form>');
+  var form = $('<form class="hidden" method="post" action="/task/edit"></form>');
   $(form).append(`<input name="id" value="${id}">`);
   $("body").append(form);
   $(form).submit();
