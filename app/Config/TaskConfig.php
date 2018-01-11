@@ -18,5 +18,5 @@ class TaskConfig
     const PAGINATION_NUM = 9;
 
     //Session index
-    const SESSION_SRC_PAGE = "srcPage";
+    const SESSION_SRC_LOCATION = "srcLocation";
 }

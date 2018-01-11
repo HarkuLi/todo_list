@@ -40,7 +40,7 @@ if ($page < 1 || ($page > $pageNum && $page !== 1)) {
     include __DIR__."/../../View/Page/404.html";
     die();
 }
-$_SESSION[TaskConfig::SESSION_SRC_PAGE] = $page;
+$_SESSION[TaskConfig::SESSION_SRC_LOCATION] = $_SERVER["REQUEST_URI"];
 
 ///////////////////
 // generate page //

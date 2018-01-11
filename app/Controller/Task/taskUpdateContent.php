@@ -15,7 +15,7 @@ $taskService = new TaskService();
 $taskService->updateContent($id, $title);
 
 $location = "/task";
-if (isset($_SESSION[TaskConfig::SESSION_SRC_PAGE])) {
-    $location .= "?page=".$_SESSION[TaskConfig::SESSION_SRC_PAGE];
+if (isset($_SESSION[TaskConfig::SESSION_SRC_LOCATION])) {
+    $location = $_SESSION[TaskConfig::SESSION_SRC_LOCATION];
 }
 header("Location: $location", true, 303);
