@@ -14,15 +14,19 @@ use Harku\TodoList\Config\TaskConfig;
 
         <!-- tool bar -->
         <div class="well row">
-            <!-- new button -->
-            <div class="col-sm-1">
+            <div class="col-sm-8">
+                <!-- new button -->
                 <a href="/task/new" class="btn btn-info btn-sm" title="new">
                     <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <!-- export button -->
+                <a href="/task/export" class="btn btn-info btn-sm" title="export">
+                    <span class="glyphicon glyphicon-export"></span>
                 </a>
             </div>
 
             <!-- search -->
-            <form method="get" action="/task" class="col-sm-offset-7 col-sm-4">
+            <form method="get" action="/task" class="col-sm-4">
                 <input type="text" class="hidden" name="status" value="<?= $status ?>">
                 <div class="input-group">
                     <input type="text"
