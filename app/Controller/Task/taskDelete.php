@@ -1,9 +1,12 @@
 <?php
 use Harku\TodoList\Service\TaskService;
+use Harku\TodoList\Util\ControllerUtil\JsonResponse;
+use Harku\TodoList\Util\ControllerUtil\Parameter;
+
+Parameter::required("id");
 
 $taskService = new TaskService();
 $taskService->delete($_POST["id"]);
 
-header("Content-Type: application/json");
 $res = ["id" => $_POST["id"]];
-echo json_encode($res);
+JsonResponse::plain($res);

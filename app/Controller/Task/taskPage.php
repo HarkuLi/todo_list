@@ -1,28 +1,29 @@
 <?php
-
-use Harku\TodoList\Service\TaskService;
 use Harku\TodoList\Config\TaskConfig;
 use Harku\TodoList\Model\Task;
+use Harku\TodoList\Service\TaskService;
+use Harku\TodoList\Util\ControllerUtil\PageResponse;
 
 session_start();
+//record current uri for coming back from edit page
+$_SESSION[TaskConfig::SESSION_SRC_LOCATION] = $_SERVER["REQUEST_URI"];
+
 $taskService = new TaskService();
 
 //////////////////////
 // query parameters //
 //////////////////////
 
-$title = null;
-if (isset($_GET["title"])) {
-    $title = $_GET["title"];
-}
+$title = $_GET["title"] ?? null;
+$status = (int)($_GET["status"] ?? TaskConfig::TASK_NOT_FINISH);
+$page = (int)($_GET["page"] ?? 1);
 
-$status = TaskConfig::TASK_NOT_FINISH;
-if (isset($_GET["status"])) {
-    $status = (int)$_GET["status"];
-}
+//////////////
+// validate //
+//////////////
+
 if (!isset(TaskConfig::TASK_STATUS_TEXT[$status])) {
-    http_response_code(400);
-    include __DIR__."/../../View/Page/400.html";
+    PageResponse::badRequest();
     die();
 }
 
@@ -30,17 +31,10 @@ $filter = new Task();
 $filter->setTitle($title);
 $filter->setStatus($status);
 $pageNum = $taskService->getPageNum($filter);
-
-$page = 1;
-if (isset($_GET["page"])) {
-    $page = (int)$_GET["page"];
-}
 if ($page < 1 || ($page > $pageNum && $page !== 1)) {
-    http_response_code(404);
-    include __DIR__."/../../View/Page/404.html";
+    PageResponse::notFound();
     die();
 }
-$_SESSION[TaskConfig::SESSION_SRC_LOCATION] = $_SERVER["REQUEST_URI"];
 
 ///////////////////
 // generate page //

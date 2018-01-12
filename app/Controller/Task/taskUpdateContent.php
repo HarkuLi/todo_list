@@ -1,21 +1,16 @@
 <?php
-use Harku\TodoList\Service\TaskService;
 use Harku\TodoList\Config\TaskConfig;
+use Harku\TodoList\Service\TaskService;
+use Harku\TodoList\Util\ControllerUtil\Parameter;
 
 session_start();
 
-if (!isset($_POST["id"]) || !isset($_POST["title"])) {
-    http_response_code(400);
-    die();
-}
+Parameter::required("id", "title");
 $id = $_POST["id"];
 $title = $_POST["title"];
 
 $taskService = new TaskService();
 $taskService->updateContent($id, $title);
 
-$location = "/task";
-if (isset($_SESSION[TaskConfig::SESSION_SRC_LOCATION])) {
-    $location = $_SESSION[TaskConfig::SESSION_SRC_LOCATION];
-}
+$location = $_SESSION[TaskConfig::SESSION_SRC_LOCATION] ?? "/task";
 header("Location: $location", true, 303);

@@ -1,17 +1,18 @@
 <?php
 use Harku\TodoList\Service\TaskService;
+use Harku\TodoList\Util\ControllerUtil\JsonResponse;
+use Harku\TodoList\Util\ControllerUtil\Parameter;
 
-if (!isset($_POST["id"])) {
-    http_response_code(400);
-    die();
-}
-
+Parameter::required("id");
 $id = $_POST["id"];
 
 $taskService = new TaskService();
 $task = $taskService->getTask($id);
 if ($task === null) {
-    http_response_code(400);
+    JsonResponse::plain(
+        ["msg" => "The id isn't existing."],
+        400
+    );
     die();
 }
 
