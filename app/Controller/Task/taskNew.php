@@ -1,2 +1,2 @@
 <?php
-include __DIR__."/../../View/Page/newTask.php";
+include __DIR__."/../../View/Task/Page/newTask.php";

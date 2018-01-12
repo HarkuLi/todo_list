@@ -7,7 +7,7 @@ use Harku\TodoList\Config\TaskConfig;
 <head>
     <title>task list</title>
     <!-- <link rel="stylesheet" type="text/css" href="main.css" /> -->
-    <?php include __DIR__."/../Partial/head.html"; ?>
+    <?php include __DIR__."/../../Shared/Partial/head.html"; ?>
 </head>
 <body>
     <div class="container">

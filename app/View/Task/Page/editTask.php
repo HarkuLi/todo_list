@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>edit task</title>
-    <?php include __DIR__."/../Partial/head.html"; ?>
+    <?php include __DIR__."/../../Shared/Partial/head.html"; ?>
 </head>
 <body>
     <div class="container">

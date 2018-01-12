@@ -65,4 +65,4 @@ if ($page <= round(TaskConfig::PAGINATION_NUM / 2)) {
      */
 }
 
-include __DIR__."/../../View/Page/task.php";
+include __DIR__."/../../View/Task/Page/task.php";
